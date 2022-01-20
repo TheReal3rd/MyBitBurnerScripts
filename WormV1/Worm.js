@@ -4,7 +4,7 @@
 @Libs None
 @Description
 	-Automatically scan for server to then attack or hack finally transfering itself to the target systems.
-@Mem 5.00
+@Mem 6.00
 @TODO
 	-Make the Script more efficent.
 	-Fix Script Rerunning.
@@ -23,8 +23,9 @@ var log = (args[0] === 1)
 var tServers = scan()
 var hServers = []
 var aServers = []
-var wormMem = 5.00
-var attackMem = 2.45
+//Storing memory usage here is little memory efficent
+var wormMem = 6.00
+var attackMem = 4.45
 var hMem = 1.70
 
 // Worm START
@@ -38,12 +39,12 @@ for (var i = 0; i != tServers.length; i++) {
 	}
 }
 
-if (aServers.length != 0) {
-	doAttack(log, aServers)
-}
 if (hServers.length != 0) {
 	doHack(log, hServers)
 	doWorm(log, hServers)
+}
+if (aServers.length != 0) {
+	doAttack(log, aServers)
 }
 // Worm END
 
@@ -60,11 +61,8 @@ function doWorm(log, servers) {
 	}
 }
 function doAttack(log, servers) {
-	for (var i = 0; i != servers.length; i++) {
-		var target = servers[i]
-		logMessage(log, "Attacking " + target)
-		run("attack-lite.script", 1, args[0], target)
-	}
+	logMessage(log, "Attacking " + servers.toString())
+	spawn("attack-lite.script", 1, args[0], servers.toString())
 }
 function doHack(log, servers) {
 	for (var i = 0; i != servers.length; i++) {
